@@ -66,6 +66,7 @@ def download_video():
                     'crf': '23',      # Set quality (lower means better quality, range 0-51)
                 }
             }],
+            'verbose': True,
             'cookiefile': 'cookies.txt'
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
