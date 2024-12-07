@@ -61,7 +61,6 @@ def download_video():
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4',  # Specify the output format
-                'preferedquality': '23',
             }],
             'verbose': True,
             'cookiefile': 'cookies.txt'
