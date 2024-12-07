@@ -60,7 +60,11 @@ def download_video():
             'format': quality,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4',  # Corrected spelling
+                'preferedformat': 'mp4',
+                'options': {
+                    'preset': 'fast',  # Use a faster preset
+                    'crf': '23',      # Set quality (lower means better quality, range 0-51)
+                }
             }],
             'cookiefile': 'cookies.txt'
         }
