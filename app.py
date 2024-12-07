@@ -60,11 +60,12 @@ def download_video():
             'format': quality,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4',
-                'options': {
-                    'preset': 'fast',  # Use a faster preset
-                    'crf': '23',      # Set quality (lower means better quality, range 0-51)
-                }
+                'preferedformat': 'mp4',  # Specify the output format
+                'preset': 'fast',          # Use a fast preset
+                'args': [
+            '-crf', '23',         # Set constant rate factor (lower is better quality)
+            '-preset', 'fast',    # Set the preset for speed vs. compression ratio
+        ],
             }],
             'verbose': True,
             'cookiefile': 'cookies.txt'
