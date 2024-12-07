@@ -62,6 +62,7 @@ def download_video():
                 'key': 'FFmpegVideoConvertor',
                 'preferedformat': 'mp4',  # Specify the output format
             }],
+            'verbose': True,
             'cookiefile': 'cookies.txt'
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
