@@ -1,5 +1,0 @@
-flask
-flask-cors
-flask-limiter
-yt-dlp
-redis

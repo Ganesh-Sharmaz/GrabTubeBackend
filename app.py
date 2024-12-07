@@ -6,20 +6,15 @@ import os
 import yt_dlp
 import threading
 import time
-import redis
 
 app = Flask(__name__)
 CORS(app, origins="https://localhost:5173")
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-redis_url = "redis://red-cta3akbtq21c73bvcbgg:6379"
-redis_client = redis.Redis.from_url(redis_url)
-
 # Initialize Flask-Limiter
 limiter = Limiter(
     get_remote_address,  # Use the user's IP address for rate limiting
     app=app,
-    storage_uri=redis_url,
     default_limits=["10 per 5 minutes"],  # Default rate limit
 )
 
@@ -43,8 +38,6 @@ def delete_old_files():
                     os.remove(file_path)
                     print(f"Deleted expired file: {file_path}")
         time.sleep(300)  # Check every 5 minutes
-        
-
 
 @app.route('/download', methods=['POST'])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
@@ -60,10 +53,8 @@ def download_video():
             'format': quality,
             'postprocessors': [{
                 'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4',  # Specify the output format
+                'preferedformat': 'mp4',  # Corrected spelling
             }],
-            'verbose': True,
-            'cookiefile': 'cookies.txt'
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(video_url, download=True)
@@ -84,5 +75,5 @@ if __name__ == '__main__':
     # Start the file deletion thread
     deletion_thread = threading.Thread(target=delete_old_files, daemon=True)
     deletion_thread.start()
-    port = int(os.environ.get("PORT", 5000))  # Default to port 5000 if PORT is not set
-    app.run(host='0.0.0.0', port=port, debug=True)
+
+    app.run(debug=True)
